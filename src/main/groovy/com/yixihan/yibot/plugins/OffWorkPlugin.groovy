@@ -12,7 +12,7 @@ import groovy.util.logging.Slf4j
 import org.springframework.stereotype.Component
 
 /**
- * description
+ * 下班时间 插件
  *
  * @author yixihan
  * @date 2024-05-11 16:14

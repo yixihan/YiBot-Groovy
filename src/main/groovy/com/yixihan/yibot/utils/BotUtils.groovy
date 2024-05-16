@@ -1,6 +1,8 @@
 package com.yixihan.yibot.utils
 
+import cn.hutool.core.codec.Base64
 import cn.hutool.core.collection.CollUtil
+import cn.hutool.core.img.ImgUtil
 import cn.hutool.core.thread.ThreadUtil
 import cn.hutool.core.util.StrUtil
 import com.mikuac.shiro.common.utils.ShiroUtils
@@ -13,6 +15,8 @@ import com.mikuac.shiro.enums.MsgTypeEnum
 import com.mikuac.shiro.model.ArrayMsg
 import com.yixihan.yibot.config.BotConfig
 import groovy.util.logging.Slf4j
+
+import java.awt.image.BufferedImage
 
 /**
  * bot 工具类
@@ -65,5 +69,39 @@ class BotUtils {
 
     static Boolean validatePrivateMsg(PrivateMessageEvent event, Bot bot, String triggerWorld) {
         return validateMsg(event, bot, triggerWorld)
+    }
+
+    static Boolean validateMsgType(String message, MsgTypeEnum... msgTypeList) {
+        List<ArrayMsg> msg = ShiroUtils.rawToArrayMsg(message)
+        return msg.any { it.type in msgTypeList }
+    }
+
+    static boolean isAtSelf(String message) {
+        List<ArrayMsg> msg = ShiroUtils.rawToArrayMsg(message)
+        return msg.any {
+            it.type == MsgTypeEnum.at && (it.data.get("qq") as Long) == getBot().selfId
+        }
+    }
+
+    static String imgToBase64(String message) {
+        return ShiroUtils.rawToArrayMsg(message)
+                .stream()
+                .filter(it -> MsgTypeEnum.image == it.getType()).map(it -> it.getData().get("url"))
+                .map { imageUrlToBase64(it) }
+                .toList().join(",")
+    }
+
+    static String imageUrlToBase64(String imageUrl) throws Exception {
+        URL url = new URL(imageUrl)
+        try (InputStream is = url.openStream()) {
+            ByteArrayOutputStream out = new ByteArrayOutputStream()
+            byte[] buffer = new byte[1024]
+            int read
+            while ((read = is.read(buffer)) != -1) {
+                out.write(buffer, 0, read)
+            }
+            byte[] imageBytes = out.toByteArray()
+            return Base64.encodeUrlSafe(imageBytes)
+        }
     }
 }

@@ -44,6 +44,7 @@ shiro:
   plugin-list:
     - com.yixihan.yibot.plugins.OffWorkPlugin
     - com.yixihan.yibot.job.GroupInfoJob
+    - com.yixihan.yibot.plugins.RepeaterPlugins
 
 # bot config
 bot:
