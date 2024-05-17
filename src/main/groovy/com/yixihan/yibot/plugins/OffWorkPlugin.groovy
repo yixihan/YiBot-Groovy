@@ -7,8 +7,12 @@ import com.mikuac.shiro.core.Bot
 import com.mikuac.shiro.core.BotPlugin
 import com.mikuac.shiro.dto.event.message.GroupMessageEvent
 import com.mikuac.shiro.dto.event.message.PrivateMessageEvent
+import com.yixihan.yibot.comm.TriggerWorldConst
+import com.yixihan.yibot.db.pojo.OffWorkTime
+import com.yixihan.yibot.db.service.OffWorkTimeService
 import com.yixihan.yibot.utils.BotUtils
 import groovy.util.logging.Slf4j
+import jakarta.annotation.Resource
 import org.springframework.stereotype.Component
 
 /**
@@ -21,86 +25,122 @@ import org.springframework.stereotype.Component
 @Component
 class OffWorkPlugin extends BotPlugin {
 
-    static final String OFF_WORK_TRIGGER_WORLD = "下班时间"
-    static final String ADD_OFF_WORK_TRIGGER_WORLD = "下班时间 添加"
-    static final String DEL_OFF_WORK_TRIGGER_WORLD = "下班时间 删除"
-    static final String HELP_OFF_WORK_TRIGGER_WORLD = "下班时间 帮助"
-    static final String SHOW_OFF_WORK_TRIGGER_WORLD = "下班时间 列表"
+    @Resource
+    OffWorkTimeService service
 
     @Override
     int onGroupMessage(Bot bot, GroupMessageEvent event) {
-        if (BotUtils.validateGroupMsg(event, bot, ADD_OFF_WORK_TRIGGER_WORLD)) {
-            addOffWorkTime(StrUtil.splitTrim(event.message, " ").last())
-            bot.sendGroupMsg(event.groupId, showOffWorkTime(), false)
-        } else if (BotUtils.validateGroupMsg(event, bot, DEL_OFF_WORK_TRIGGER_WORLD)) {
-            delOffWorkTime(StrUtil.splitTrim(event.message, " ").last())
-            bot.sendGroupMsg(event.groupId, showOffWorkTime(), false)
-        } else if (BotUtils.validateGroupMsg(event, bot, HELP_OFF_WORK_TRIGGER_WORLD)) {
-            bot.sendGroupMsg(event.groupId, offWorkTimeHelp(), false)
-        } else if (BotUtils.validateGroupMsg(event, bot, SHOW_OFF_WORK_TRIGGER_WORLD)) {
-            bot.sendGroupMsg(event.groupId, showOffWorkTime(), false)
-        } else if (BotUtils.validateGroupMsg(event, bot, OFF_WORK_TRIGGER_WORLD)) {
-            bot.sendGroupMsg(event.groupId, getOffWorkTime(), false)
-        }
+        offWorkTrigger(event, bot)
         return super.onGroupMessage(bot, event)
     }
 
-
     @Override
     int onPrivateMessage(Bot bot, PrivateMessageEvent event) {
-        if (BotUtils.validatePrivateMsg(event, bot, OFF_WORK_TRIGGER_WORLD)) {
-            bot.sendPrivateMsg(event.userId, getOffWorkTime(), false)
-        }
+        offWorkTrigger(event, bot)
         return super.onPrivateMessage(bot, event)
     }
 
-    static final TreeSet<String> OFF_WORK_TIME_LIST = [
-            "17:00",
-            "17:30",
-            "18:00",
-            "18:30",
-            "19:00"
-    ]
-
-    static void addOffWorkTime(String offWorkTime) {
-        OFF_WORK_TIME_LIST.add(offWorkTime.trim().replace("：", ":"))
+    void offWorkTrigger(GroupMessageEvent event, Bot bot) {
+        if (BotUtils.validateGroupMsg(event, bot, TriggerWorldConst.ADD_OFF_WORK_WORLD)) {
+            addOffWorkTime(StrUtil.splitTrim(event.message, " ").last(), event.userId)
+            bot.sendGroupMsg(event.groupId, showOffWorkTime(), false)
+        } else if (BotUtils.validateGroupMsg(event, bot, TriggerWorldConst.DEL_OFF_WORK_WORLD)) {
+            delOffWorkTime(StrUtil.splitTrim(event.message, " ").last())
+            bot.sendGroupMsg(event.groupId, showOffWorkTime(), false)
+        } else if (BotUtils.validateGroupMsg(event, bot, TriggerWorldConst.HELP_OFF_WORK_WORLD)) {
+            bot.sendGroupMsg(event.groupId, offWorkTimeHelp(), false)
+        } else if (BotUtils.validateGroupMsg(event, bot, TriggerWorldConst.SHOW_OFF_WORK_WORLD)) {
+            bot.sendGroupMsg(event.groupId, showOffWorkTime(), false)
+        } else if (BotUtils.validateGroupMsg(event, bot, TriggerWorldConst.OFF_WORK_WORLD)) {
+            bot.sendGroupMsg(event.groupId, getOffWorkTime(), false)
+        }
     }
 
-    static void delOffWorkTime(String offWorkTime) {
-        OFF_WORK_TIME_LIST.remove(offWorkTime)
+    void offWorkTrigger(PrivateMessageEvent event, Bot bot) {
+        if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.OFF_WORK_WORLD)) {
+            bot.sendPrivateMsg(event.userId, getOffWorkTime(), false)
+        } else if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.DEL_OFF_WORK_WORLD)) {
+            delOffWorkTime(StrUtil.splitTrim(event.message, " ").last())
+            bot.sendPrivateMsg(event.userId, showOffWorkTime(), false)
+        } else if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.HELP_OFF_WORK_WORLD)) {
+            bot.sendPrivateMsg(event.userId, offWorkTimeHelp(), false)
+        } else if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.SHOW_OFF_WORK_WORLD)) {
+            bot.sendPrivateMsg(event.userId, showOffWorkTime(), false)
+        } else if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.OFF_WORK_WORLD)) {
+            bot.sendPrivateMsg(event.userId, getOffWorkTime(), false)
+        }
     }
 
-    static String showOffWorkTime() {
+    /**
+     * 添加新的下班时间
+     *
+     * @param offWorkTime 下班时间
+     * @param createUserId 添加人 qq 号
+     */
+    void addOffWorkTime(String offWorkTime, Long createUserId) {
+        OffWorkTime time = new OffWorkTime()
+        time.offWorkTime = parseOffWorkTime(offWorkTime)
+        time.createBy = createUserId
+        service.addOffWorkTime(time)
+    }
+
+    /**
+     * 删除现有的下班时间
+     * @param offWorkTime 下班时间
+     */
+    void delOffWorkTime(String offWorkTime) {
+        service.delOffWorkTime(parseOffWorkTime(offWorkTime))
+    }
+
+    /**
+     * 展示所有的下班时间
+     * @return 下班时间
+     */
+    String showOffWorkTime() {
         StringBuilder sb = new StringBuilder()
 
         sb.append("下班时间列表:\n")
-        OFF_WORK_TIME_LIST.each {
-            sb.append(it).append("\n")
+        service.showOffWorkTime().each {
+            sb.append(it.offWorkTime).append("\n")
         }
 
         return sb.substring(0, sb.length() - 1)
     }
 
+    /**
+     * 下班时间 - 帮助面板
+     * @return 下班时间 - 帮助面板
+     */
     static String offWorkTimeHelp() {
-        return "下班时间 用法 \n" +
-                "下班时间 -- 还需多久才下班 \n" +
-                "下班时间 添加 HH:mm -- 添加新的下班时间 \n" +
-                "下班时间 删除 HH:mm -- 删除存在的下班时间 \n" +
-                "下班时间 列表 -- 展示所有的下班时间 \n" +
-                "下班时间 帮助 -- 展示下班时间帮助面板"
+        return "下班时间 用法\n" +
+                "${TriggerWorldConst.OFF_WORK_WORLD} -- 还需多久才下班\n" +
+                "${TriggerWorldConst.ADD_OFF_WORK_WORLD} HH:mm -- 添加新的下班时间\n" +
+                "${TriggerWorldConst.DEL_OFF_WORK_WORLD} HH:mm -- 删除存在的下班时间\n" +
+                "${TriggerWorldConst.SHOW_OFF_WORK_WORLD} -- 展示所有的下班时间\n" +
+                "${TriggerWorldConst.HELP_OFF_WORK_WORLD} -- 展示下班时间帮助面板"
     }
 
-    static String getOffWorkTime() {
+    /**
+     * 获取下班时间
+     * @return 下班时间
+     */
+    String getOffWorkTime() {
         Date now = new Date()
         StringBuilder sb = new StringBuilder()
 
-        OFF_WORK_TIME_LIST.each {
-            sb.append(between(now, it)).append("\n")
+        service.showOffWorkTime().each {
+            sb.append(between(now, it.offWorkTime)).append("\n")
         }
 
         return sb.substring(0, sb.length() - 1)
     }
 
+    /**
+     * 计算下班时间
+     * @param nowTime 现在时间
+     * @param offWorkTimeStr 下班时间
+     * @return 两者时差 (带分 & 秒)
+     */
     static String between(Date nowTime, String offWorkTimeStr) {
         Date offWorkTime = DateUtil.parse(DateUtil.formatDate(nowTime) + " " + offWorkTimeStr)
         if (DateUtil.compare(nowTime, offWorkTime) < 0) {
@@ -110,6 +150,23 @@ class OffWorkPlugin extends BotPlugin {
             return "下班时间：${DateUtil.format(offWorkTime, "HH:mm")}，还有 ${betweenMin} min ${betweenSeconds} s"
         } else {
             return "下班时间：${DateUtil.format(offWorkTime, "HH:mm")}，已下班"
+        }
+    }
+
+    /**
+     * 格式化处理下班时间, 中文 (：) 处理为 英文 (:), 去除多余的空格
+     *
+     * @param offWorkTime 下班时间
+     * @return 标准格式的下班时间
+     */
+    static String parseOffWorkTime(String offWorkTime) {
+        try {
+            offWorkTime = offWorkTime.trim().replace("：", ":")
+            DateUtil.parseTimeToday(offWorkTime)
+            return offWorkTime
+        } catch (Exception e) {
+            log.warn("下班时间 ==> 时间格式化失败, ${e.message}")
+            return null
         }
     }
 

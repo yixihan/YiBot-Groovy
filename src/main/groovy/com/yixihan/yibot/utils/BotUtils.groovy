@@ -91,6 +91,13 @@ class BotUtils {
                 .toList().join(",")
     }
 
+    static String getTextMessage(String message) {
+        return ShiroUtils.rawToArrayMsg(message)
+                .stream()
+                .filter(it -> MsgTypeEnum.text == it.getType()).map(it -> it.getData().get("text"))
+                .findFirst()
+    }
+
     static String imageUrlToBase64(String imageUrl) throws Exception {
         URL url = new URL(imageUrl)
         try (InputStream is = url.openStream()) {

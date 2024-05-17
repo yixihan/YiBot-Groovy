@@ -1,0 +1,14 @@
+yibot:
+  # bot name
+  name: Yibot
+  # db config
+  db:
+    host: 192.168.11.8
+    port: 3306
+    db: yibot
+    username: root
+    password: 123456
+  # bot config
+  bot:
+    id: 2535774265
+    masterId: 3113788997

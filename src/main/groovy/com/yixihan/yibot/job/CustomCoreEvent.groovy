@@ -26,12 +26,11 @@ class CustomCoreEvent extends CoreEvent {
     @Override
     void online(Bot bot) {
         SystemUtils.setStart()
-        log.info("system initial successful")
-        bot.sendPrivateMsg(botConfig.masterId, "已上线", false)
+        log.info("bot connect successful")
     }
 
     @Override
     void offline(long account) {
-        log.info("诶～我又离线了")
+        log.info("bot discount successful")
     }
 }
