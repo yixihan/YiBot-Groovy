@@ -1,6 +1,6 @@
 package com.yixihan.yibot.plugins
 
-import cn.hutool.core.date.CalendarUtil
+
 import cn.hutool.core.util.NumberUtil
 import cn.hutool.system.SystemUtil
 import com.mikuac.shiro.core.Bot
@@ -12,10 +12,8 @@ import com.yixihan.yibot.utils.SystemUtils
 import groovy.util.logging.Slf4j
 import org.springframework.stereotype.Component
 import oshi.SystemInfo
-import oshi.hardware.HardwareAbstractionLayer
 
 import java.lang.management.ManagementFactory
-import java.lang.management.RuntimeMXBean
 
 /**
  * description

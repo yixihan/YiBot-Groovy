@@ -2,7 +2,6 @@ package com.yixihan.yibot.utils
 
 import cn.hutool.core.codec.Base64
 import cn.hutool.core.collection.CollUtil
-import cn.hutool.core.img.ImgUtil
 import cn.hutool.core.thread.ThreadUtil
 import cn.hutool.core.util.StrUtil
 import com.mikuac.shiro.common.utils.ShiroUtils
@@ -15,8 +14,6 @@ import com.mikuac.shiro.enums.MsgTypeEnum
 import com.mikuac.shiro.model.ArrayMsg
 import com.yixihan.yibot.config.BotConfig
 import groovy.util.logging.Slf4j
-
-import java.awt.image.BufferedImage
 
 /**
  * bot 工具类
