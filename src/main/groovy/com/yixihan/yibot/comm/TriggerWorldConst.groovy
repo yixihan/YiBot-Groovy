@@ -23,4 +23,7 @@ class TriggerWorldConst {
     static final String DEL_REPEATER_EXCLUDE_GROUP_WORLD = "复读 排除群 删除"
     static final String SHOW_REPEATER_EXCLUDE_GROUP_WORLD = "复读 排除群 列表"
     static final String HELP_REPEATER_WORLD = "复读 帮助"
+
+    // ==== 状态插件
+    static final String STATUS_WORLD = "status"
 }

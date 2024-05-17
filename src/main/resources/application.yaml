@@ -22,7 +22,7 @@ spring:
 # mybatis-plus配置
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
   mapper-locations: classpath*:mapper/**Mapper.xml
   type-aliases-package: com.yixihan.yibot.db.pojo
 
@@ -72,6 +72,7 @@ shiro:
   plugin-list:
     - com.yixihan.yibot.plugins.OffWorkPlugin
     - com.yixihan.yibot.job.GroupInfoJob
+    - com.yixihan.yibot.plugins.StatusPlugins
     - com.yixihan.yibot.plugins.RepeaterPlugins
 
 # bot config
