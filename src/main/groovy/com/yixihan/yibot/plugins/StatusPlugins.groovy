@@ -16,7 +16,7 @@ import oshi.SystemInfo
 import java.lang.management.ManagementFactory
 
 /**
- * description
+ * bot 机器状态查询 插件
  *
  * @author yixihan
  * @date 2024-05-17 15:54

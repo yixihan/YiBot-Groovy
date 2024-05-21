@@ -73,7 +73,6 @@ class RepeaterPlugins extends BotPlugin {
             excludeGroupList = service.showExcludeGroup()
         }
         if (excludeGroupList.contains(event.groupId)) {
-            log.info("排除群, 跳过")
             return
         }
         String message = event.message
