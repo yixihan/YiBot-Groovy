@@ -53,7 +53,7 @@ shiro:
       # 是否启用
       enable: true
       # 反向 Websocket 连接地址，无需该配置字段可删除，将使用默认值 "/ws/shiro"
-      url: "/onebot/v11/ws"
+      url: "/ws"
       # 最大空闲时间，超过这个时间将关闭会话
       max-session-idle-timeout: 900000
   # 线程池配置

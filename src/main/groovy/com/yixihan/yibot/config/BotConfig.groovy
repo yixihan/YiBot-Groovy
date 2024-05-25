@@ -37,7 +37,7 @@ class BotConfig implements InitializingBean {
 
     @Override
     void afterPropertiesSet() throws Exception {
-        log.info("bot conf ==> qq no: ${id}")
-        log.info("bot conf ==> master qq no: ${masterId}")
+        log.info("qq no: ${id}")
+        log.info("master qq no: ${masterId}")
     }
 }
