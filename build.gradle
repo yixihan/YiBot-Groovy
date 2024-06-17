@@ -25,7 +25,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.apache.groovy:groovy'
-    implementation 'com.mikuac:shiro:2.2.4'
+    implementation 'com.mikuac:shiro:2.2.5'
     implementation 'cn.hutool:hutool-all:5.8.26'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
     implementation 'com.baomidou:mybatis-plus-spring-boot3-starter:3.5.6'
