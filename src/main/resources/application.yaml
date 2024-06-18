@@ -81,3 +81,11 @@ shiro:
 bot:
   id: ${yibot.bot.id}
   masterId: ${yibot.bot.masterId}
+
+aria2:
+  base-url: http://127.0.0.1:20244/open
+  upload: "/upload"
+  download: "/upload/download/{}"
+  list: "/path/page"
+  status: "/upload/status"
+  health: "/health"
