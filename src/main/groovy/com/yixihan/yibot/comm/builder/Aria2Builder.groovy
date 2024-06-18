@@ -32,6 +32,7 @@ class Aria2Builder {
     String filePath = "bot"
     String fileName
     String fileId
+    String jobId
 
     Long page = 0
     Long pageSize = 10
@@ -85,6 +86,11 @@ class Aria2Builder {
 
     Aria2Builder fileId(String fileId) {
         this.fileId = fileId
+        return this
+    }
+
+    Aria2Builder jobId(String jobId) {
+        this.jobId = jobId
         return this
     }
 
@@ -243,8 +249,8 @@ class Aria2Builder {
 
     String buildStatusBody() {
         Map map = new HashMap()
-        if (StrUtil.isNotBlank(fileId)) {
-            map.put("fileId", fileId)
+        if (StrUtil.isNotBlank(jobId)) {
+            map.put("jobId", jobId)
         }
         return JSONUtil.toJsonStr(map)
     }
