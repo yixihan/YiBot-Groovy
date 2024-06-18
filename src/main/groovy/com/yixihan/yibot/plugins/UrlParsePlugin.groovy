@@ -14,6 +14,7 @@ import com.mikuac.shiro.core.BotPlugin
 import com.mikuac.shiro.dto.event.message.GroupMessageEvent
 import com.mikuac.shiro.enums.MsgTypeEnum
 import com.mikuac.shiro.model.ArrayMsg
+import com.yixihan.yibot.permission.Permission
 import com.yixihan.yibot.utils.ScriptUtils
 import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Component
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Component
 class UrlParsePlugin extends BotPlugin {
 
     @Override
+    @Permission(allowAnonymous = true, allowGroup = true, allowPrivate = false, allowMaster = true)
     int onGroupMessage(Bot bot, GroupMessageEvent event) {
         String url = getUrl(event.getMessage())
         if (StrUtil.isNotBlank(url)) {

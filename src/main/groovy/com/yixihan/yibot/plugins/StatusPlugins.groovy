@@ -7,6 +7,7 @@ import com.mikuac.shiro.core.Bot
 import com.mikuac.shiro.core.BotPlugin
 import com.mikuac.shiro.dto.event.message.AnyMessageEvent
 import com.yixihan.yibot.comm.TriggerWorldConst
+import com.yixihan.yibot.permission.Permission
 import com.yixihan.yibot.utils.BotUtils
 import com.yixihan.yibot.utils.SystemUtils
 import groovy.util.logging.Slf4j
@@ -26,6 +27,7 @@ import java.lang.management.ManagementFactory
 class StatusPlugins extends BotPlugin {
 
     @Override
+    @Permission(allowAnonymous = true, allowGroup = true, allowPrivate = false, allowMaster = true)
     int onAnyMessage(Bot bot, AnyMessageEvent event) {
         if (BotUtils.validateMsg(event, bot, TriggerWorldConst.STATUS_WORLD)) {
             getBotStatus(bot, event)

@@ -8,6 +8,7 @@ import com.mikuac.shiro.dto.event.message.GroupMessageEvent
 import com.mikuac.shiro.dto.event.message.PrivateMessageEvent
 import com.yixihan.yibot.comm.TriggerWorldConst
 import com.yixihan.yibot.comm.builder.Aria2Builder
+import com.yixihan.yibot.permission.Permission
 import com.yixihan.yibot.utils.BotUtils
 import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Component
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Component
 class Aria2Plugin extends BotPlugin {
 
     @Override
+    @Permission(allowAnonymous = false, allowGroup = false, allowPrivate = true, allowMaster = true)
     int onPrivateMessage(Bot bot, PrivateMessageEvent event) {
         try {
             if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.UPLOAD_FILE_ARIA2)) {

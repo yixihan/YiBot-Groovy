@@ -13,6 +13,7 @@ import com.yixihan.yibot.comm.TriggerWorldConst
 import com.yixihan.yibot.db.pojo.RepeaterExcludeGroup
 import com.yixihan.yibot.db.pojo.RepeaterRandom
 import com.yixihan.yibot.db.service.RepeaterService
+import com.yixihan.yibot.permission.Permission
 import com.yixihan.yibot.utils.BotUtils
 import groovy.util.logging.Slf4j
 import jakarta.annotation.Resource
@@ -38,6 +39,7 @@ class RepeaterPlugins extends BotPlugin {
     static Map<Long, List<RepeaterRandom>> randomMap = [:]
 
     @Override
+    @Permission(allowAnonymous = true, allowGroup = true, allowPrivate = false, allowMaster = true)
     int onGroupMessage(Bot bot, GroupMessageEvent event) {
         repeaterTrigger(event, bot)
         repeater(bot, event)
