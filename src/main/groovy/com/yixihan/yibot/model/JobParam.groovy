@@ -16,5 +16,5 @@ class JobParam {
 
     Date jobExecuteDate
 
-    String details
+    Map details = [:]
 }
