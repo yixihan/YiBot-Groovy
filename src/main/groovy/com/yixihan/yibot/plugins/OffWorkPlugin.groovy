@@ -30,14 +30,14 @@ class OffWorkPlugin extends BotPlugin {
     OffWorkTimeService service
 
     @Override
-    @Permission(allowAnonymous = false, allowGroup = true, allowPrivate = true, allowMaster = true)
+    @Permission(onlyAllowMaster = false, excludeGroup = true)
     int onGroupMessage(Bot bot, GroupMessageEvent event) {
         offWorkTrigger(event, bot)
         return super.onGroupMessage(bot, event)
     }
 
     @Override
-    @Permission(allowAnonymous = false, allowGroup = true, allowPrivate = true, allowMaster = true)
+    @Permission(onlyAllowMaster = false, excludeGroup = true)
     int onPrivateMessage(Bot bot, PrivateMessageEvent event) {
         offWorkTrigger(event, bot)
         return super.onPrivateMessage(bot, event)

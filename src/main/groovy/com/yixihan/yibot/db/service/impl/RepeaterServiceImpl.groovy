@@ -3,9 +3,9 @@ package com.yixihan.yibot.db.service.impl
 import cn.hutool.core.util.ObjUtil
 import cn.hutool.core.util.StrUtil
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
-import com.yixihan.yibot.db.pojo.RepeaterExcludeGroup
+import com.yixihan.yibot.db.pojo.ExcludeGroup
 import com.yixihan.yibot.db.pojo.RepeaterRandom
-import com.yixihan.yibot.db.service.RepeaterExcludeGroupService
+import com.yixihan.yibot.db.service.ExcludeGroupService
 import com.yixihan.yibot.db.service.RepeaterRandomService
 import com.yixihan.yibot.db.service.RepeaterService
 import jakarta.annotation.Resource
@@ -23,18 +23,18 @@ import org.springframework.stereotype.Service
 class RepeaterServiceImpl implements RepeaterService {
 
     @Resource
-    RepeaterExcludeGroupService excludeGroupService
+    ExcludeGroupService excludeGroupService
 
     @Resource
     RepeaterRandomService randomService
 
     @Override
-    void addExcludeGroup(RepeaterExcludeGroup group) {
+    void addExcludeGroup(ExcludeGroup group) {
         if (ObjUtil.isNull(group) || ObjUtil.isNull(group.groupId)) {
             return
         }
-        Long count = excludeGroupService.count(new QueryWrapper<RepeaterExcludeGroup>()
-                .eq(RepeaterExcludeGroup.GROUP_ID, group.groupId))
+        Long count = excludeGroupService.count(new QueryWrapper<ExcludeGroup>()
+                .eq(ExcludeGroup.GROUP_ID, group.groupId))
 
         if (count > 0) {
             return
@@ -48,8 +48,8 @@ class RepeaterServiceImpl implements RepeaterService {
         if (ObjUtil.isNull(groupId)) {
             return
         }
-        List<Long> idList = excludeGroupService.list(new QueryWrapper<RepeaterExcludeGroup>()
-                .eq(ObjUtil.isNotNull(groupId), RepeaterExcludeGroup.GROUP_ID, groupId))
+        List<Long> idList = excludeGroupService.list(new QueryWrapper<ExcludeGroup>()
+                .eq(ObjUtil.isNotNull(groupId), ExcludeGroup.GROUP_ID, groupId))
                 .collect { it.id }
 
         excludeGroupService.removeByIds(idList)

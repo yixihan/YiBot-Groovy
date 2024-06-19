@@ -1,6 +1,6 @@
 package com.yixihan.yibot.db.service
 
-import com.yixihan.yibot.db.pojo.RepeaterExcludeGroup
+import com.yixihan.yibot.db.pojo.ExcludeGroup
 import com.baomidou.mybatisplus.extension.service.IService
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService
  * @author yixihan
  * @since 2024-05-17
  */
-interface RepeaterExcludeGroupService extends IService<RepeaterExcludeGroup> {
+interface ExcludeGroupService extends IService<ExcludeGroup> {
 
 }

@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component
 class UrlParsePlugin extends BotPlugin {
 
     @Override
-    @Permission(allowAnonymous = true, allowGroup = true, allowPrivate = false, allowMaster = true)
+    @Permission(onlyAllowMaster = false, excludeGroup = true)
     int onGroupMessage(Bot bot, GroupMessageEvent event) {
         String url = getUrl(event.getMessage())
         if (StrUtil.isNotBlank(url)) {
@@ -143,22 +143,6 @@ class UrlParsePlugin extends BotPlugin {
         return MsgUtils.builder()
                 .text(text)
                 .build()
-    }
-
-
-    static void main(String[] args) {
-        String msg
-//        msg = "【高温干旱的河北农田咋样了？【主播说三农】】 https://www.bilibili.com/video/BV1ey411q7Ke/?share_source=copy_web&vd_source=5e38c5db882c1a505ea5a21aa5ad86f9";
-//        msg = "[CQ:json,data={\"ver\":\"1.0.0.19\"&#44;\"prompt\":\"&#91;QQ小程序&#93;女孩酷爱野外露营，还专挑下雨天气，躲在豪华帐篷里面做饭睡大觉\"&#44;\"config\":{\"type\":\"normal\"&#44;\"width\":0&#44;\"height\":0&#44;\"forward\":1&#44;\"autoSize\":0&#44;\"ctime\":1718468601&#44;\"token\":\"73a3f0230eebcad179a469f68490f308\"}&#44;\"needShareCallBack\":false&#44;\"app\":\"com.tencent.miniapp_01\"&#44;\"view\":\"view_8C8E89B49BE609866298ADDFF2DBABA4\"&#44;\"meta\":{\"detail_1\":{\"appid\":\"1109937557\"&#44;\"appType\":0&#44;\"title\":\"哔哩哔哩\"&#44;\"desc\":\"女孩酷爱野外露营，还专挑下雨天气，躲在豪华帐篷里面做饭睡大觉\"&#44;\"icon\":\"http:\\/\\/miniapp.gtimg.cn\\/public\\/appicon\\/432b76be3a548fc128acaa6c1ec90131_200.jpg\"&#44;\"preview\":\"pubminishare-30161.picsz.qpic.cn\\/7624413f-3dbb-49a4-90fe-96d04ba0e270\"&#44;\"url\":\"m.q.qq.com\\/a\\/s\\/519f3e69d1019cf985304b260d4fc3eb\"&#44;\"scene\":1036&#44;\"host\":{\"uin\":1097282916&#44;\"nick\":\"雨霁云霭\"}&#44;\"shareTemplateId\":\"8C8E89B49BE609866298ADDFF2DBABA4\"&#44;\"shareTemplateData\":{}&#44;\"qqdocurl\":\"https://b23.tv/XqX0qHD?share_medium=android&amp;share_source=qq&amp;bbid=XY6655E6B57950F836C29BD47455FD9BC2F61&amp;ts=1718468599137\"&#44;\"showLittleTail\":\"\"&#44;\"gamePoints\":\"\"&#44;\"gamePointsUrl\":\"\"}}}]";
-        msg = "https://github.com/spring-projects/spring-boot"
-//        msg = "https://github.com/yixihan/yixihan"
-        println isGithubUrl("https://github.com/yixihan/yixihan")
-        println isGithubUrl("https://github.com/yixihan/yicloud")
-        println isGithubUrl("https://github.com/yixihan/yicode")
-        println isGithubUrl("https://github.com/spring-projects/spring-boot")
-        File path = FileUtil.file("script/github.py")
-        println ScriptUtils.runPythonScript(path.getPath(), getUrl(msg))
-
     }
 
     static String formatNumber(Number number) {

@@ -22,8 +22,8 @@ create table if not exists `repeater_random`
     index text_idx (`text`)
 ) comment '随机复读表';
 
-drop table if exists `repeater_exclude_group`;
-create table if not exists `repeater_exclude_group`
+drop table if exists `exclude_group`;
+create table if not exists `exclude_group`
 (
     `id`          bigint(18) unsigned auto_increment comment 'id',
     `group_id`    bigint(18) not null comment '群号',
@@ -33,7 +33,7 @@ create table if not exists `repeater_exclude_group`
 
     primary key (`id`),
     index group_id_idx (`group_id`)
-) comment '复读排除群表';
+) comment '排除群表';
 
 drop table if exists `off_work_time`;
 create table if not exists `off_work_time`

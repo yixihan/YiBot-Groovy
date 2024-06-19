@@ -10,7 +10,7 @@ import com.mikuac.shiro.core.BotPlugin
 import com.mikuac.shiro.dto.event.message.GroupMessageEvent
 import com.mikuac.shiro.enums.MsgTypeEnum
 import com.yixihan.yibot.comm.TriggerWorldConst
-import com.yixihan.yibot.db.pojo.RepeaterExcludeGroup
+import com.yixihan.yibot.db.pojo.ExcludeGroup
 import com.yixihan.yibot.db.pojo.RepeaterRandom
 import com.yixihan.yibot.db.service.RepeaterService
 import com.yixihan.yibot.permission.Permission
@@ -39,7 +39,7 @@ class RepeaterPlugins extends BotPlugin {
     static Map<Long, List<RepeaterRandom>> randomMap = [:]
 
     @Override
-    @Permission(allowAnonymous = true, allowGroup = true, allowPrivate = false, allowMaster = true)
+    @Permission(onlyAllowMaster = false, excludeGroup = true)
     int onGroupMessage(Bot bot, GroupMessageEvent event) {
         repeaterTrigger(event, bot)
         repeater(bot, event)
@@ -197,7 +197,7 @@ class RepeaterPlugins extends BotPlugin {
     void addExcludeGroup(Bot bot, GroupMessageEvent event) {
         String text = event.message.split(" ").last()
         try {
-            RepeaterExcludeGroup group = new RepeaterExcludeGroup(
+            ExcludeGroup group = new ExcludeGroup(
                     groupId: Long.parseLong(text),
                     createBy: event.userId
             )

@@ -55,7 +55,7 @@ class BotUtils {
         }
 
         if (flag) {
-            log.info("触发词: [${triggerWorld}] 触发成功, 事件: [${event.class.simpleName}], 触发人: [${event.userId}]")
+            log.info("触发词: [${triggerWorld}] 触发成功, 事件: [${event.class.simpleName}], 触发人: [${event.userId}], 触发群: [${event instanceof GroupMessageEvent ? event.groupId : ""}]")
         }
         return flag
     }

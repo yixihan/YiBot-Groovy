@@ -17,15 +17,9 @@ import java.lang.annotation.Target
 @Retention(RetentionPolicy.RUNTIME)
 @interface Permission {
 
-    // 允许匿名用户访问
-    boolean allowAnonymous() default true
+    // 仅允许 master 用户访问
+    boolean onlyAllowMaster() default false
 
-    // 允许 master 用户访问
-    boolean allowMaster() default true
-
-    // 允许群聊中使用
-    boolean allowGroup() default true
-
-    // 允许私人聊天使用
-    boolean allowPrivate() default true
+    // 排除群不允许访问
+    boolean excludeGroup() default true
 }

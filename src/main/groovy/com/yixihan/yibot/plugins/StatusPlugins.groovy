@@ -27,7 +27,7 @@ import java.lang.management.ManagementFactory
 class StatusPlugins extends BotPlugin {
 
     @Override
-    @Permission(allowAnonymous = true, allowGroup = true, allowPrivate = false, allowMaster = true)
+    @Permission(onlyAllowMaster = false, excludeGroup = true)
     int onAnyMessage(Bot bot, AnyMessageEvent event) {
         if (BotUtils.validateMsg(event, bot, TriggerWorldConst.STATUS_WORLD)) {
             getBotStatus(bot, event)

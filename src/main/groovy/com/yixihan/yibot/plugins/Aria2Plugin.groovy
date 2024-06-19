@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component
 class Aria2Plugin extends BotPlugin {
 
     @Override
-    @Permission(allowAnonymous = false, allowGroup = false, allowPrivate = true, allowMaster = true)
+    @Permission(onlyAllowMaster = true)
     int onPrivateMessage(Bot bot, PrivateMessageEvent event) {
         try {
             if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.UPLOAD_FILE_ARIA2)) {
