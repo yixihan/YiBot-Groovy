@@ -1,7 +1,6 @@
 package com.yixihan.yibot.plugins
 
-import cn.hutool.core.collection.CollUtil
-import cn.hutool.core.io.FileUtil
+
 import cn.hutool.core.util.NumberUtil
 import cn.hutool.core.util.ObjUtil
 import cn.hutool.core.util.StrUtil
@@ -91,7 +90,7 @@ class UrlParsePlugin extends BotPlugin {
         }
 
         JSONObject jsonData = JSONUtil.parseObj(data)
-        bot.sendGroupMsg(event.getGroupId(), buildeBilibiliMsg(jsonData), false)
+        bot.sendGroupMsg(event.getGroupId(), buildBilibiliMsg(jsonData), false)
     }
 
     static void parseGithubUrl(String url, Bot bot, GroupMessageEvent event) {
@@ -108,7 +107,7 @@ class UrlParsePlugin extends BotPlugin {
 
     }
 
-    static String buildeBilibiliMsg(JSONObject jsonData) {
+    static String buildBilibiliMsg(JSONObject jsonData) {
         String text = StrUtil.builder()
                 .append("标题：").append(jsonData.getStr("title")).append("\n")
                 .append("简介：").append(jsonData.getStr("desc").length() > 100 ? jsonData.getStr("desc").substring(0, 100) + "..." : jsonData.getStr("desc")).append("\n")

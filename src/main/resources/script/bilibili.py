@@ -104,14 +104,14 @@ if __name__ == '__main__':
         if author_search:
             author = author_search.group(1).strip()
         else:
-            raise ValueError("未找到作者")
+            author = "NA"
 
         # 提取视频简介
         meta_parts = re.split(r',\s*', meta_description)
         if meta_parts:
             video_desc = meta_parts[0].strip()
         else:
-            raise ValueError("未找到视频简介")
+            video_desc = "NA"
 
         if numbers:
             views, danmaku, likes, coins, favorites, shares = [int(n) for n in numbers[0]]

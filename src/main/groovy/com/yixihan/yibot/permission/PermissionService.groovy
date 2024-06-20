@@ -86,7 +86,7 @@ class PermissionAspect {
             log.warn("Permission Validate Failed. plugin: ${joinPoint.getSignature().getDeclaringTypeName()}, event: ${event}")
             return BotPlugin.MESSAGE_IGNORE
         } catch (Exception e) {
-            log.warn("Permission Validate Failed: {}", e.message)
+            log.warn("Permission Validate Failed: ${e.message}", e)
             return BotPlugin.MESSAGE_IGNORE
         }
     }

@@ -4,7 +4,6 @@ import cn.hutool.core.exceptions.ExceptionUtil
 import cn.hutool.json.JSONUtil
 import com.mikuac.shiro.core.Bot
 import com.mikuac.shiro.core.BotPlugin
-import com.mikuac.shiro.dto.event.message.GroupMessageEvent
 import com.mikuac.shiro.dto.event.message.PrivateMessageEvent
 import com.yixihan.yibot.comm.TriggerWorldConst
 import com.yixihan.yibot.comm.builder.Aria2Builder
@@ -35,7 +34,7 @@ class Aria2Plugin extends BotPlugin {
                 list(bot, event)
             } else if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.STATUS_FILE_ARIA2)) {
                 status(bot, event)
-            } else if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.HELATH_FILE_ARIA2)) {
+            } else if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.HEALTH_FILE_ARIA2)) {
                 health(bot, event)
             } else if (BotUtils.validatePrivateMsg(event, bot, TriggerWorldConst.HELP_FILE_ARIA2)) {
                 aria2Show(bot, event)
@@ -167,7 +166,7 @@ class Aria2Plugin extends BotPlugin {
                 .append("${TriggerWorldConst.DOWNLOAD_FILE_ARIA2} {fileId}-- 获取下载文件链接\n")
                 .append("${TriggerWorldConst.LIST_FILE_ARIA2} [filePath] [fileName] [page] [pageSize] -- 分页搜索文件\n")
                 .append("${TriggerWorldConst.STATUS_FILE_ARIA2} [fileId]-- 查看 aira2 下载进度\n")
-                .append("${TriggerWorldConst.HELATH_FILE_ARIA2} -- aria2 健康检查\n")
+                .append("${TriggerWorldConst.HEALTH_FILE_ARIA2} -- aria2 健康检查\n")
                 .append("${TriggerWorldConst.HELP_FILE_ARIA2} -- aria 2 帮助面板")
 
 

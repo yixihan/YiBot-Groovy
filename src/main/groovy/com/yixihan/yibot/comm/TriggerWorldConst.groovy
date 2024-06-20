@@ -33,6 +33,6 @@ class TriggerWorldConst {
     static final String DOWNLOAD_FILE_ARIA2 = "aria2 download"
     static final String LIST_FILE_ARIA2 = "aria2 list"
     static final String STATUS_FILE_ARIA2 = "aria2 status"
-    static final String HELATH_FILE_ARIA2 = "aria2 health"
+    static final String HEALTH_FILE_ARIA2 = "aria2 health"
     static final String HELP_FILE_ARIA2 = "aria2 help"
 }
