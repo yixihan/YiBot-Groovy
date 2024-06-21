@@ -1,5 +1,5 @@
 FROM openjdk:17
-EXPOSE 27692
+EXPOSE 8080
 
 LABEL authors="yixihan"
 MAINTAINER yixihan<yixihan20010617@gmail.com>
@@ -10,6 +10,6 @@ ENV LANGUAGE en_US.en
 ENV LC_ALL en_US.UTF-8
 
 VOLUME /tmp
-ADD target/*.jar  /app.jar
-RUN bash -c 'touch /app.jar' cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+ADD *.jar  /app.jar
+RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java","-jar","/app.jar"]

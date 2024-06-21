@@ -60,10 +60,8 @@ docker build -t ${PROJECT}:$TAG .
 
 # 启动容器
 echo ""=============启动容器$IMAGE_NAME"============="
-OUT_PORT=27682
-IN_PORT=8080
 
-docker run -p $OUT_PORT:$IN_PORT -d --restart='always' \
+docker run -p 27692:8080 -d --restart='always' \
 -e JAVA_OPTS='-Xms2048m -Xmx2048m -Xmn1024m'  \
 -e "SPRING_PROFILES_ACTIVE=home" \
 --name $IMAGE_NAME $IMAGE_NAME:$TAG
