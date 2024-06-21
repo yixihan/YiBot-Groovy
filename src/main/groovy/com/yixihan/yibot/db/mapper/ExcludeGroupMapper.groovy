@@ -1,6 +1,6 @@
 package com.yixihan.yibot.db.mapper
 
-import com.yixihan.yibot.db.pojo.RepeaterExcludeGroup
+import com.yixihan.yibot.db.pojo.ExcludeGroup
 import com.baomidou.mybatisplus.core.mapper.BaseMapper
 
 import org.apache.ibatis.annotations.Mapper
@@ -14,6 +14,6 @@ import org.apache.ibatis.annotations.Mapper
  * @since 2024-05-17
  */
 @Mapper
-interface RepeaterExcludeGroupMapper extends BaseMapper<RepeaterExcludeGroup> {
+interface ExcludeGroupMapper extends BaseMapper<ExcludeGroup> {
 
 }

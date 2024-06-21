@@ -1,6 +1,6 @@
 package com.yixihan.yibot.db.service
 
-import com.yixihan.yibot.db.pojo.RepeaterExcludeGroup
+import com.yixihan.yibot.db.pojo.ExcludeGroup
 import com.yixihan.yibot.db.pojo.RepeaterRandom
 
 /**
@@ -13,7 +13,7 @@ import com.yixihan.yibot.db.pojo.RepeaterRandom
  */
 interface RepeaterService {
 
-    void addExcludeGroup(RepeaterExcludeGroup group)
+    void addExcludeGroup(ExcludeGroup group)
 
     void delExcludeGroup(Long groupId)
 

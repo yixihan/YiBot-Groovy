@@ -18,7 +18,7 @@ import lombok.experimental.Accessors
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-class RepeaterExcludeGroup extends BaseModel {
+class ExcludeGroup extends BaseModel {
 
 
     @Serial

@@ -74,8 +74,18 @@ shiro:
     - com.yixihan.yibot.job.GroupInfoJob
     - com.yixihan.yibot.plugins.StatusPlugins
     - com.yixihan.yibot.plugins.RepeaterPlugins
+    - com.yixihan.yibot.plugins.UrlParsePlugin
+    - com.yixihan.yibot.plugins.Aria2Plugin
 
 # bot config
 bot:
   id: ${yibot.bot.id}
   masterId: ${yibot.bot.masterId}
+
+aria2:
+  base-url: http://127.0.0.1:20244/open
+  upload: "/upload"
+  download: "/upload/download/{}"
+  list: "/path/page"
+  status: "/upload/status"
+  health: "/health"

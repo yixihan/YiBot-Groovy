@@ -10,6 +10,7 @@ import com.mikuac.shiro.dto.event.message.PrivateMessageEvent
 import com.yixihan.yibot.comm.TriggerWorldConst
 import com.yixihan.yibot.db.pojo.OffWorkTime
 import com.yixihan.yibot.db.service.OffWorkTimeService
+import com.yixihan.yibot.permission.Permission
 import com.yixihan.yibot.utils.BotUtils
 import groovy.util.logging.Slf4j
 import jakarta.annotation.Resource
@@ -29,12 +30,14 @@ class OffWorkPlugin extends BotPlugin {
     OffWorkTimeService service
 
     @Override
+    @Permission(onlyAllowMaster = false, excludeGroup = true)
     int onGroupMessage(Bot bot, GroupMessageEvent event) {
         offWorkTrigger(event, bot)
         return super.onGroupMessage(bot, event)
     }
 
     @Override
+    @Permission(onlyAllowMaster = false, excludeGroup = true)
     int onPrivateMessage(Bot bot, PrivateMessageEvent event) {
         offWorkTrigger(event, bot)
         return super.onPrivateMessage(bot, event)

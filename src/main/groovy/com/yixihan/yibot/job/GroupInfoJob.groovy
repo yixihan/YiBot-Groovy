@@ -2,13 +2,17 @@ package com.yixihan.yibot.job
 
 
 import cn.hutool.json.JSONObject
-import cn.hutool.json.JSONUtil
 import com.mikuac.shiro.core.Bot
 import com.mikuac.shiro.core.BotPlugin
 import com.mikuac.shiro.dto.action.response.GroupInfoResp
 import com.mikuac.shiro.dto.action.response.GroupMemberInfoResp
+import com.yixihan.yibot.model.JobParam
 import groovy.util.logging.Slf4j
+import jakarta.annotation.Resource
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
+
+import java.util.concurrent.TimeUnit
 
 /**
  * 获取群信息
@@ -18,12 +22,41 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Slf4j
-class GroupInfoJob extends BotPlugin implements StartJob {
+class GroupInfoJob extends BotPlugin implements Job {
+
+    @Resource
+    JobRunner jobRunner
 
     @Override
-    void run(Bot bot) {
+    String jobCode() {
+        return "INIT_GROUP_INFO"
+    }
+
+    @Override
+    String jobName() {
+        return "Init Group Info"
+    }
+
+    @Override
+    String jobDescription() {
+        return "Init Group Info"
+    }
+
+    @Override
+    String jobSchedule() {
+        return "Adhoc"
+    }
+
+    @Override
+    @Scheduled(initialDelay = 10, timeUnit = TimeUnit.SECONDS, fixedDelay = Long.MAX_VALUE)
+    void execute() {
+        jobRunner.runJob(this)
+    }
+
+    @Override
+    void run(JobParam param) {
         log.info("init group info")
-        initGroupInfo(bot)
+        initGroupInfo(param.bot)
         log.info("init group info successful")
     }
 
