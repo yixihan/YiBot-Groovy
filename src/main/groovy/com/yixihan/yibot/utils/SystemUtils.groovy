@@ -2,18 +2,21 @@ package com.yixihan.yibot.utils
 
 
 import cn.hutool.core.date.DateUtil
+import cn.hutool.core.thread.ThreadUtil
 import cn.hutool.http.HttpRequest
+import groovy.util.logging.Slf4j
 import org.springframework.core.env.Environment
 
 import java.time.Duration
 import java.time.LocalDateTime
 
 /**
- * description
+ * 系统 工具类
  *
  * @author yixihan
  * @date 2024-05-11 14:56
  */
+@Slf4j
 class SystemUtils {
 
     static Boolean startFlag
@@ -53,9 +56,16 @@ class SystemUtils {
         Map<String, String> header = [:]
         header.put("Content-Type", "application/vnd.spring-boot.actuator.v3+json")
         header.put("Transfer-Encoding", "chunked")
+        log.info("System is Shutdown Now...")
         String shutdownUrl = "http://localhost:${Bean.get(Environment).getProperty("server.port")}/actuator/shutdown"
         HttpRequest.post(shutdownUrl)
                 .addHeaders(header)
                 .execute()
+
+        // 异步暂停 5s, 等待 actuator shutdown
+        ThreadUtil.execAsync {
+            ThreadUtil.safeSleep(5 * 1000)
+            System.exit(0)
+        }
     }
 }
