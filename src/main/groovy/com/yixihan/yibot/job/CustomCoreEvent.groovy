@@ -32,5 +32,6 @@ class CustomCoreEvent extends CoreEvent {
     @Override
     void offline(long account) {
         log.info("bot discount successful")
+        SystemUtils.unStart()
     }
 }

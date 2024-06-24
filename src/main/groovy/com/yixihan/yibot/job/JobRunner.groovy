@@ -37,9 +37,15 @@ class JobRunner {
      */
     static void runJob(Job job, JobParam param) {
         try {
+            int waitCnt = 0
             while (!SystemUtils.isStart()) {
-                log.warn("System is not start now ...")
-                ThreadUtil.safeSleep(1 * 1000)
+                log.warn("System is Not Start Now ...")
+                ThreadUtil.safeSleep(3 * 1000)
+                if (++waitCnt >= 10) {
+                    log.error("System is Not Start, Please Check")
+                    SystemUtils.shutdownSystem()
+                    return
+                }
             }
             log.info("job[{}] start run", job.jobName())
             if (ObjUtil.isNull(param)) {

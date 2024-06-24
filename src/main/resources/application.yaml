@@ -77,6 +77,21 @@ shiro:
     - com.yixihan.yibot.plugins.UrlParsePlugin
     - com.yixihan.yibot.plugins.Aria2Plugin
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    # health point config
+    health:
+      enabled: true
+      show-details: always
+
+    shutdown:
+      enabled: true
+
+
 # bot config
 bot:
   id: ${yibot.bot.id}
