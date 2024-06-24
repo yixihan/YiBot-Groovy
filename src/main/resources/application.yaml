@@ -83,9 +83,9 @@ bot:
   masterId: ${yibot.bot.masterId}
 
 aria2:
-  base-url: http://127.0.0.1:20244/open
-  upload: "/upload"
-  download: "/upload/download/{}"
-  list: "/path/page"
-  status: "/upload/status"
-  health: "/health"
+  base-url: ${yibot.aria2.base-url:http://127.0.0.1:20244}
+  upload: "/open/upload"
+  download: "/open/upload/download/{}"
+  list: "/open/path/page"
+  status: "/open/upload/status"
+  health: "/actuator/health"

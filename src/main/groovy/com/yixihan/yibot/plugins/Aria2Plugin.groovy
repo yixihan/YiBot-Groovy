@@ -50,7 +50,7 @@ class Aria2Plugin extends BotPlugin {
     static void upload(Bot bot, PrivateMessageEvent event) {
         String[] keys = event.message.split(" ")
         String url
-        String filePath = "bot"
+        String filePath = "/bot"
 
         if (keys.length < 3) {
             bot.sendPrivateMsg(event.userId, "参数错误", false)
@@ -95,9 +95,9 @@ class Aria2Plugin extends BotPlugin {
     static void list(Bot bot, PrivateMessageEvent event) {
         String[] keys = event.message.split(" ")
 
-        String filePath = "bot"
+        String filePath = "/bot"
         String fileName = ""
-        Long page = 0
+        Long page = 1
         Long pageSize = 10
 
         if (keys.length >= 6) {
@@ -128,14 +128,14 @@ class Aria2Plugin extends BotPlugin {
     static void status(Bot bot, PrivateMessageEvent event) {
         String[] keys = event.message.split(" ")
 
-        String fileId = ""
+        String jobId = ""
         if (keys.length >= 3) {
-            fileId = keys[2]
+            jobId = keys[2]
         }
 
         String data = Aria2Builder.build()
                 .status()
-                .fileId(fileId)
+                .jobId(jobId)
                 .done()
         if (JSONUtil.isTypeJSON(data)) {
             bot.sendPrivateMsg(event.userId, "请求成功, 返回信息如下", false)

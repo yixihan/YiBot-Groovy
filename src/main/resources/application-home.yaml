@@ -12,3 +12,5 @@ yibot:
   bot:
     id: 2535774265
     masterId: 3113788997
+  aria2:
+    base-url: http://192.168.1.100:20244

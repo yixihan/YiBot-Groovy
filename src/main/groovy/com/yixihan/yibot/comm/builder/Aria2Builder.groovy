@@ -29,7 +29,7 @@ class Aria2Builder {
     Boolean health = true
 
     String url
-    String filePath = "bot"
+    String filePath = "/bot"
     String fileName
     String fileId
     String jobId
@@ -46,21 +46,25 @@ class Aria2Builder {
 
     Aria2Builder upload() {
         this.upload = true
+        this.health = false
         return this
     }
 
     Aria2Builder download() {
         this.download = true
+        this.health = false
         return this
     }
 
     Aria2Builder status() {
         this.status = true
+        this.health = false
         return this
     }
 
     Aria2Builder list() {
         this.list = true
+        this.health = false
         return this
     }
 
@@ -181,7 +185,7 @@ class Aria2Builder {
 
     private String aria2Health() {
         try {
-            HttpResponse response = HttpRequest.get(getRequestUrl()).execute()
+            HttpResponse response = HttpRequest.get(getRequestUrl(true)).execute()
             if (response.ok) {
                 return response.body()
             } else {
@@ -202,22 +206,25 @@ class Aria2Builder {
         return healthData.getStr("status") == "UP"
     }
 
-    private String getRequestUrl() {
+    private String getRequestUrl(Boolean flag = false) {
         Aria2Config config = Bean.get(Aria2Config)
-        if (upload) {
-            return config.baseUrl + "/" + config.upload
+        String url
+        if (this.health || flag) {
+            url = config.baseUrl + config.health
         } else if (download) {
             Assert.notBlank(fileId, "fileId should be provided")
-            return StrUtil.format(config.baseUrl + "/" + config.download, fileId)
+            url = StrUtil.format(config.baseUrl + config.download, fileId)
         } else if (list) {
-            return config.baseUrl + "/" + config.list
+            url = config.baseUrl + config.list
         } else if (status) {
-            return config.baseUrl + "/" + config.status
-        } else if (health) {
-            return config.baseUrl + "/" + config.health
+            url = config.baseUrl + config.status
+        } else if (upload) {
+            url = config.baseUrl + config.upload
         } else {
             throw ExceptionUtil.wrapRuntime("Invalid Params")
         }
+        log.info("aria2 request url : ${url}")
+        return url
     }
 
     String buildUploadBody() {
@@ -226,7 +233,9 @@ class Aria2Builder {
         Map map = MapUtil.builder()
                 .put("fileUrl", url)
                 .put("filePath", filePath)
+                .put("fileName", fileName)
                 .build()
+        log.info("request body: ${JSONUtil.toJsonStr(map)}")
         return JSONUtil.toJsonStr(map)
     }
 
@@ -244,6 +253,7 @@ class Aria2Builder {
         if (StrUtil.isNotBlank(fileName)) {
             map.put("fileName", fileName)
         }
+        log.info("request body: ${JSONUtil.toJsonStr(map)}")
         return JSONUtil.toJsonStr(map)
     }
 
@@ -252,6 +262,7 @@ class Aria2Builder {
         if (StrUtil.isNotBlank(jobId)) {
             map.put("jobId", jobId)
         }
+        log.info("request body: ${JSONUtil.toJsonStr(map)}")
         return JSONUtil.toJsonStr(map)
     }
 }
