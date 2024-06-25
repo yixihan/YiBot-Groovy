@@ -29,10 +29,11 @@ class Aria2Builder {
     Boolean health = true
 
     String url
-    String filePath = "/bot"
+    String filePath = "/bot/"
     String fileName
     String fileId
     String jobId
+    String gid
 
     Long page = 0
     Long pageSize = 10
@@ -98,6 +99,11 @@ class Aria2Builder {
         return this
     }
 
+    Aria2Builder gid(String gid) {
+        this.gid = gid
+        return this
+    }
+
     Aria2Builder page(Long page) {
         this.page = page
         return this
@@ -132,7 +138,7 @@ class Aria2Builder {
                     .execute()
 
             if (response.ok) {
-                return response.body()
+                return JSONUtil.parseObj(response.body()).getStr("data")
             } else {
                 throw ExceptionUtil.wrapRuntime("aria2 request failed")
             }
@@ -155,7 +161,7 @@ class Aria2Builder {
                     .execute()
 
             if (response.ok) {
-                return JSONUtil.parseObj(response.body()).getStr("fileList")
+                return JSONUtil.parseObj(response.body()).getStr("data")
             } else {
                 throw ExceptionUtil.wrapRuntime("aria2 request failed")
             }
@@ -173,7 +179,7 @@ class Aria2Builder {
                     .execute()
 
             if (response.ok) {
-                return response.body()
+                return JSONUtil.parseObj(response.body()).getStr("data")
             } else {
                 throw ExceptionUtil.wrapRuntime("aria2 request failed")
             }
@@ -261,6 +267,9 @@ class Aria2Builder {
         Map map = new HashMap()
         if (StrUtil.isNotBlank(jobId)) {
             map.put("jobId", jobId)
+        }
+        if (StrUtil.isNotBlank(gid)) {
+            map.put("gid", gid)
         }
         log.info("request body: ${JSONUtil.toJsonStr(map)}")
         return JSONUtil.toJsonStr(map)

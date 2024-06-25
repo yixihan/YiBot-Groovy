@@ -29,10 +29,10 @@ class TriggerWorldConst {
 
 
     // ==== aria2 插件
-    static final String UPLOAD_FILE_ARIA2 = "aria2 upload"
-    static final String DOWNLOAD_FILE_ARIA2 = "aria2 download"
-    static final String LIST_FILE_ARIA2 = "aria2 list"
-    static final String STATUS_FILE_ARIA2 = "aria2 status"
-    static final String HEALTH_FILE_ARIA2 = "aria2 health"
-    static final String HELP_FILE_ARIA2 = "aria2 help"
+    static final String UPLOAD_FILE_ARIA2 = "cloud upload"
+    static final String DOWNLOAD_FILE_ARIA2 = "cloud download"
+    static final String LIST_FILE_ARIA2 = "cloud list"
+    static final String STATUS_FILE_ARIA2 = "cloud status"
+    static final String HEALTH_FILE_ARIA2 = "cloud health"
+    static final String HELP_FILE_ARIA2 = "cloud help"
 }
