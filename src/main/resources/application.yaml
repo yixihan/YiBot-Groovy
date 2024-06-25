@@ -99,8 +99,8 @@ bot:
 
 aria2:
   base-url: ${yibot.aria2.base-url:http://127.0.0.1:20244}
-  upload: "/open/upload"
-  download: "/open/upload/download/{}"
-  list: "/open/path/page"
-  status: "/open/upload/status"
+  upload: "/open/bot/upload"
+  download: "/open/bot/download/{}"
+  list: "/open/bot/list"
+  status: "/open/bot/status"
   health: "/actuator/health"
