@@ -66,8 +66,3 @@ docker run -p 27692:8080 -d --restart='always' \
 -e "SPRING_PROFILES_ACTIVE=home" \
 --name $IMAGE_NAME $IMAGE_NAME:$TAG
 ############################################################################
-#
-docker run -p 8080:8080 -d --restart='always' \
--e JAVA_OPTS='-Xms2048m -Xmx2048m -Xmn1024m'  \
--e "SPRING_PROFILES_ACTIVE=home" \
---name yibot yibot:0.0.1
