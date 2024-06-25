@@ -132,16 +132,7 @@ class Aria2Builder {
 
     private String uploadFile() {
         try {
-            Assert.isTrue(healthCheck(), "Aria2 Service Error, Please Check")
-            HttpResponse response = HttpRequest.post(getRequestUrl())
-                    .body(buildUploadBody())
-                    .execute()
-
-            if (response.ok) {
-                return JSONUtil.parseObj(response.body()).getStr("data")
-            } else {
-                throw ExceptionUtil.wrapRuntime("aria2 request failed")
-            }
+            return postRequest(getRequestUrl(), buildUploadBody())
         } catch (Exception e) {
             log.error("Aria2 Upload Err: ${e.getMessage()}")
             return "Aria2 Upload Err: ${e.getMessage()}"
@@ -155,16 +146,7 @@ class Aria2Builder {
 
     private String listFile() {
         try {
-            Assert.isTrue(healthCheck(), "Aria2 Service Error, Please Check")
-            HttpResponse response = HttpRequest.post(getRequestUrl())
-                    .body(buildListBody())
-                    .execute()
-
-            if (response.ok) {
-                return JSONUtil.parseObj(response.body()).getStr("data")
-            } else {
-                throw ExceptionUtil.wrapRuntime("aria2 request failed")
-            }
+            return postRequest(getRequestUrl(), buildListBody())
         } catch (Exception e) {
             log.error("Aria2 List Err: ${e.getMessage()}")
             return "Aria2 List Err: ${e.getMessage()}"
@@ -173,16 +155,7 @@ class Aria2Builder {
 
     private String statusFile() {
         try {
-            Assert.isTrue(healthCheck(), "Aria2 Service Error, Please Check")
-            HttpResponse response = HttpRequest.post(getRequestUrl())
-                    .body(buildStatusBody())
-                    .execute()
-
-            if (response.ok) {
-                return JSONUtil.parseObj(response.body()).getStr("data")
-            } else {
-                throw ExceptionUtil.wrapRuntime("aria2 request failed")
-            }
+            return postRequest(getRequestUrl(), buildStatusBody())
         } catch (Exception e) {
             log.error("Aria2 Status Err: ${e.getMessage()}")
             return "Aria2 Status Err: ${e.getMessage()}"
@@ -229,7 +202,7 @@ class Aria2Builder {
         } else {
             throw ExceptionUtil.wrapRuntime("Invalid Params")
         }
-        log.info("aria2 request url : ${url}")
+        log.debug("aria2 request url : ${url}")
         return url
     }
 
@@ -241,7 +214,7 @@ class Aria2Builder {
                 .put("filePath", filePath)
                 .put("fileName", fileName)
                 .build()
-        log.info("request body: ${JSONUtil.toJsonStr(map)}")
+        log.debug("request body: ${JSONUtil.toJsonStr(map)}")
         return JSONUtil.toJsonStr(map)
     }
 
@@ -259,7 +232,7 @@ class Aria2Builder {
         if (StrUtil.isNotBlank(fileName)) {
             map.put("fileName", fileName)
         }
-        log.info("request body: ${JSONUtil.toJsonStr(map)}")
+        log.debug("request body: ${JSONUtil.toJsonStr(map)}")
         return JSONUtil.toJsonStr(map)
     }
 
@@ -271,7 +244,20 @@ class Aria2Builder {
         if (StrUtil.isNotBlank(gid)) {
             map.put("gid", gid)
         }
-        log.info("request body: ${JSONUtil.toJsonStr(map)}")
+        log.debug("request body: ${JSONUtil.toJsonStr(map)}")
         return JSONUtil.toJsonStr(map)
+    }
+
+    String postRequest(String url, String body) {
+        Assert.isTrue(healthCheck(), "Aria2 Service Error, Please Check")
+        return parseBody(HttpRequest.post(url).body(body).execute())
+    }
+
+    static String parseBody(HttpResponse response) {
+        if (response.ok) {
+            return JSONUtil.parseObj(response.body()).getStr("data")
+        } else {
+            throw ExceptionUtil.wrapRuntime("aria2 request failed")
+        }
     }
 }

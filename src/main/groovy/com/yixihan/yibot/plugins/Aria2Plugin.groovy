@@ -5,7 +5,6 @@ import cn.hutool.core.util.ObjUtil
 import cn.hutool.core.util.StrUtil
 import cn.hutool.json.JSONObject
 import cn.hutool.json.JSONUtil
-import com.mikuac.shiro.common.utils.MsgUtils
 import com.mikuac.shiro.core.Bot
 import com.mikuac.shiro.core.BotPlugin
 import com.mikuac.shiro.dto.event.message.PrivateMessageEvent
@@ -138,7 +137,6 @@ class Aria2Plugin extends BotPlugin {
                 .done()
         if (JSONUtil.isTypeJSON(data)) {
             JSONObject jsonData = JSONUtil.parseObj(data)
-            log.info("jsonData : ${jsonData}")
             StringBuilder sb = StrUtil.builder()
                     .append("路径信息： ${jsonData.getJSONObject("pathInfo").getStr("pathName")}").append("\n")
             JSONObject fileData = jsonData.getJSONObject("fileList")
