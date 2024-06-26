@@ -186,7 +186,7 @@ class Aria2Plugin extends BotPlugin {
                         .append("等待任务数量：${jsonData.getStr("waitingNum")}")
             } else {
                 sb.append("job[${jsonData.getStr("jobId")}]-gid[${jsonData.getStr("gid")}] 当前状态").append("\n")
-                        .append("状态：${jsonData.getStr("downloadSpeed")}").append("\n")
+                        .append("状态：${jsonData.getStr("status")}").append("\n")
                         .append("下载速度：${jsonData.getStr("downloadSpeed")}").append("\n")
                         .append("上传速度：${jsonData.getStr("uploadSpeed")}").append("\n")
                         .append("任务总大小：${jsonData.getStr("totalLength")}").append("\n")
